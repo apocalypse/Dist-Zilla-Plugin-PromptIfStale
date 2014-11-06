@@ -68,9 +68,9 @@ my %expected_prompts = (
 );
 
 my @expected_prompts = ((map {
-    "Issues found:\n" . join("\n", @{$expected_prompts{$_}}, 'Continue anyway?')
+    'Stale modules found, continue anyway?'
 } qw(before_build after_build)),
-    'FooZ is not installed. Continue anyway?',
+    'Stale modules found, continue anyway?',
 );
 
 $tzil->chrome->set_response_for($_, 'y') foreach @expected_prompts;

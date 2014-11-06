@@ -232,7 +232,6 @@ sub _check_modules
     # the problem was that somehow term wrapping was enabled and mangling the output
     # installing Term::ReadLine::Gnu solved it but this is a "fix" :)
     $self->log($message);
-    $self->log('To remedy, do: cpanm ' . join(' ', @$stale_modules));
 
     # just issue a warning if not being run interactively (e.g. travis)
     if (not (-t STDIN && (-t STDOUT || !(-f STDOUT || -c STDOUT))))
@@ -247,7 +246,10 @@ sub _check_modules
             { default => 0 },
         );
     }
-    $self->log_fatal('Aborting ' . $self->phase . ' due to stale modules!') if not $continue;
+    if (not $continue) {
+        $self->log('To remedy, do: cpanm ' . join(' ', @$stale_modules));
+        $self->log_fatal('Aborting ' . $self->phase . ' due to stale modules!');
+    }
 }
 
 has _authordeps => (

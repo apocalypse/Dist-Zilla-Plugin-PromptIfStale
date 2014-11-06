@@ -110,12 +110,10 @@ sub do_tests
     );
 
     # no need to test all combinations - we sort the module list
-    my $prompt0 = "Issues found:\n"
-        . join("\n", map { '    Unindexed' . $_ . ' is not indexed.' } 0..5)
-        . "\nContinue anyway?";
+    my $prompt0 = "Stale modules found, continue anyway?";
     $tzil->chrome->set_response_for($prompt0, 'y');
 
-    my $prompt1 = 'Unindexed6 is not indexed. Continue anyway?';
+    my $prompt1 = 'Stale modules found, continue anyway?';
     $tzil->chrome->set_response_for($prompt1, 'n');
 
     # ensure we find the library, not in a local directory, before we change directories
@@ -159,7 +157,7 @@ sub do_tests
 
     cmp_deeply(
         $tzil->log_messages,
-        superbagof("[PromptIfStale] Aborting build\n[PromptIfStale] To remedy, do: cpanm Unindexed6"),
+        superbagof("[PromptIfStale] Aborting build due to stale modules!"),
         'build was aborted, with remedy instructions',
     );
 
