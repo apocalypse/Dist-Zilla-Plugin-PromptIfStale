@@ -65,7 +65,7 @@ my $tzil = Builder->from_config(
     Dist::Zilla::Plugin::PromptIfStale::__clear_already_checked();
 }
 
-my $prompt = 'Stale modules found, continue anyway?';
+my $prompt = '1 stale modules found, continue anyway?';
 $tzil->chrome->set_response_for($prompt, 'n');
 
 $tzil->chrome->logger->set_debug(1);

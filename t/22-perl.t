@@ -111,7 +111,7 @@ my @prompts;
         },
     );
 
-    my $prompt = 'Stale modules found, continue anyway?';
+    my $prompt = '1 stale modules found, continue anyway?';
     $tzil->chrome->set_response_for($prompt, 'y');
 
     {

@@ -224,14 +224,11 @@ sub _check_modules
 
     return if not @$errors;
 
-    my $message = @$errors > 1
-        ? join("\n    ", 'Issues found:', @$errors)
-        : $errors->[0];
-
     # avoid term issues reported by APOCAL and DAGOLDEN
     # the problem was that somehow term wrapping was enabled and mangling the output
     # installing Term::ReadLine::Gnu solved it but this is a "fix" :)
-    $self->log($message);
+    $self->log('Issues found:');
+    $self->log($_) for @$errors;
 
     # just issue a warning if not being run interactively (e.g. travis)
     if (not (-t STDIN && (-t STDOUT || !(-f STDOUT || -c STDOUT))))
@@ -242,7 +239,7 @@ sub _check_modules
     my $continue;
     if ( ! $self->fatal ) {
         $continue = $self->zilla->chrome->prompt_yn(
-            'Stale modules found, continue anyway?',
+            scalar @$stale_modules . ' stale modules found, continue anyway?',
             { default => 0 },
         );
     }

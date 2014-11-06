@@ -110,11 +110,8 @@ sub do_tests
     );
 
     # no need to test all combinations - we sort the module list
-    my $prompt0 = "Stale modules found, continue anyway?";
-    $tzil->chrome->set_response_for($prompt0, 'y');
-
-    my $prompt1 = 'Stale modules found, continue anyway?';
-    $tzil->chrome->set_response_for($prompt1, 'n');
+    my $prompt0 = "6 stale modules found, continue anyway?";
+    $tzil->chrome->set_response_for($prompt0, 'n');
 
     # ensure we find the library, not in a local directory, before we change directories
     local @INC = @INC;
@@ -143,13 +140,13 @@ sub do_tests
 
     cmp_deeply(
         \@prompts,
-        [ $prompt0, $prompt1 ],
+        [ $prompt0 ],
         'we were indeed prompted',
     );
 
     cmp_deeply(
         \@checked_via_02packages,
-        [ map { 'Unindexed' . $_ } 0..6 ],
+        [ map { 'Unindexed' . $_ } 0..5 ],
         'all modules checked using 02packages',
     );
 
