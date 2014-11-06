@@ -110,10 +110,10 @@ sub do_tests
     );
 
     # no need to test all combinations - we sort the module list
-    my $prompt0 = "Stale modules found, continue anyway?";
+    my $prompt0 = "5 stale modules found, continue anyway?";
     $tzil->chrome->set_response_for($prompt0, 'y');
 
-    my $prompt1 = 'Stale modules found, continue anyway?';
+    my $prompt1 = '1 stale modules found, continue anyway?';
     $tzil->chrome->set_response_for($prompt1, 'n');
 
     # ensure we find the library, not in a local directory, before we change directories
@@ -140,13 +140,14 @@ sub do_tests
         qr/\Q[PromptIfStale] Aborting build\E/,
         'build aborted',
     );
-
+diag(Dumper(\@prompts,[ $prompt0, $prompt1 ]));
     cmp_deeply(
         \@prompts,
         [ $prompt0, $prompt1 ],
         'we were indeed prompted',
     );
-
+use Data::Dumper::Concise;
+diag(Dumper(\@checked_via_02packages, [ map { 'Unindexed' . $_ } 0..6 ]));
     cmp_deeply(
         \@checked_via_02packages,
         [ map { 'Unindexed' . $_ } 0..6 ],

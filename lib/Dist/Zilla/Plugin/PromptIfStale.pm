@@ -242,7 +242,7 @@ sub _check_modules
     my $continue;
     if ( ! $self->fatal ) {
         $continue = $self->zilla->chrome->prompt_yn(
-            'Stale modules found, continue anyway?',
+            scalar @$stale_modules . ' stale modules found, continue anyway?',
             { default => 0 },
         );
     }

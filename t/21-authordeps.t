@@ -78,7 +78,7 @@ my @prompts;
         Dist::Zilla::Plugin::PromptIfStale::__clear_already_checked();
     }
 
-    my $prompt = 'Stale modules found, continue anyway?';
+    my $prompt = '3 stale modules found, continue anyway?';
     $tzil->chrome->set_response_for($prompt, 'n');
 
     like(

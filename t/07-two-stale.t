@@ -56,8 +56,7 @@ my $tzil = Builder->from_config(
 );
 
 # no need to test all combinations - we sort the module list
-
-my $full_prompt = "Stale modules found, continue anyway?";
+my $full_prompt = "2 stale modules found, continue anyway?";
 $tzil->chrome->set_response_for($full_prompt, 'n');
 
 # ensure we find the library, not in a local directory, before we change directories

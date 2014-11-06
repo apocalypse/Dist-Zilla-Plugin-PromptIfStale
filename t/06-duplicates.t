@@ -67,10 +67,10 @@ my %expected_prompts = (
         map { '    Foo' . $_ . ' is not installed.' } qw(K L Y) ],
 );
 
-my @expected_prompts = ((map {
-    'Stale modules found, continue anyway?'
-} qw(before_build after_build)),
-    'Stale modules found, continue anyway?',
+my @expected_prompts = (
+    '5 stale modules found, continue anyway?',
+    '3 stale modules found, continue anyway?',
+    '1 stale modules found, continue anyway?',
 );
 
 $tzil->chrome->set_response_for($_, 'y') foreach @expected_prompts;
@@ -90,8 +90,10 @@ if (not $checked_app++)
 
 $tzil->chrome->logger->set_debug(1);
 
-$tzil->build;
-$_->before_release('Foo.tar.gz') for @{ $tzil->plugins_with(-BeforeRelease) };
+eval { # guard this so the test doesn't blow up!
+    $tzil->build;
+    $_->before_release('Foo.tar.gz') for @{ $tzil->plugins_with(-BeforeRelease) };
+};
 
 cmp_deeply(
     \@prompts,
